@@ -27,6 +27,10 @@ public class Config {
                         .requestMatchers("/api/adherents/create").permitAll()
                         .requestMatchers("/api/adherents/login").permitAll()
                         .requestMatchers("/api/admin/register", "/api/admin/login","/api/admin/update/**").permitAll()
+                        .requestMatchers("/api/activities").permitAll()
+                        .requestMatchers("/api/activities/{id}").permitAll()
+                        .requestMatchers("/api/activities/create").permitAll()
+                        .requestMatchers("/api/responsables").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
