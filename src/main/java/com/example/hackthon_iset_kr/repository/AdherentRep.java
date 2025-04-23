@@ -4,14 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
-    @Repository
-    public interface AdherentRep extends JpaRepository<Adherent, Integer> {
+@Repository
+public interface AdherentRep extends JpaRepository<Adherent, Integer> {
 
-        Optional<Adherent> findByEmail(String email);
+    Optional<Adherent> findByEmail(String email);
 
-        boolean existsByEmail(String email);
+    boolean existsByEmail(String email);
 
-        Optional<Adherent> findByEmailAndPassword(String email, String password);
+    Optional<Adherent> findByEmailAndPassword(String email, String password);
 
-    }
-
+}
