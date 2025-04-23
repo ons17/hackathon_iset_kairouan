@@ -52,7 +52,7 @@ public class AdherentService {
         }
 
     public Optional<Adherent> authenticate(String email, String password) {
-        return null;
+        return adherentRepository.findByEmailAndPassword(email, password);
     }
 }
 

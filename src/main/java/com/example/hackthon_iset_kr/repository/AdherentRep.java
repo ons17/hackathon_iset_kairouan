@@ -11,5 +11,7 @@ import java.util.Optional;
 
         boolean existsByEmail(String email);
 
+        Optional<Adherent> findByEmailAndPassword(String email, String password);
+
     }
 
