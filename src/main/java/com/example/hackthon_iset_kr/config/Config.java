@@ -31,6 +31,11 @@ public class Config {
                         .requestMatchers("/api/activities/{id}").permitAll()
                         .requestMatchers("/api/activities/create").permitAll()
                         .requestMatchers("/api/responsables").permitAll()
+                        .requestMatchers("/api/events").permitAll()
+                        .requestMatchers("/api/events/{id}").permitAll()
+                        .requestMatchers("/api/events/create").permitAll()
+
+
                         .anyRequest().authenticated()
                 );
         return http.build();
