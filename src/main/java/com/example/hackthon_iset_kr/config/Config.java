@@ -40,6 +40,7 @@ public class Config {
                         .requestMatchers("/api/events/create").permitAll()
 
 
+                        .requestMatchers("/api/admin/register", "/api/admin/login", "/api/admin/update/**", "/api/admin/create-adherent").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
