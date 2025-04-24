@@ -28,6 +28,7 @@ public class Config {
                         .requestMatchers("/api/adherents/login").permitAll()
                         .requestMatchers("/api/conventions/add").permitAll()
                         .requestMatchers("/api/conventions/id/**").permitAll()
+                        .requestMatchers("/api/conventions").permitAll()
 
                         .requestMatchers("/api/admin/register", "/api/admin/login","/api/admin/update/**").permitAll()
                         .requestMatchers("/api/activities").permitAll()
