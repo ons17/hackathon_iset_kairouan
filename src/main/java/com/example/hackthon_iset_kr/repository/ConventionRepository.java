@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConventionRepository extends JpaRepository<Convention, Long> {
+    // Tu peux ajouter des méthodes personnalisées ici si besoin
 }

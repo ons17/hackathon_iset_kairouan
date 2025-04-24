@@ -19,6 +19,7 @@ public class AdherentController {
     @Autowired
     private AdherentService adherentService;
 
+
     @GetMapping
     public ResponseEntity<List<Adherent>> getAllAdherents() {
         List<Adherent> adherents = adherentService.getAllAdherents();
@@ -34,15 +35,9 @@ public class AdherentController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createAdherent(@RequestBody Adherent adherent) {
-        if (adherentService.existsByEmail(adherent.getEmail())) {
-            Map<String, String> response = new HashMap<>();
-            response.put("error", "Email already in use");
-            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-        }
-
-        Adherent newAdherent = adherentService.saveAdherent(adherent);
-        return new ResponseEntity<>(newAdherent, HttpStatus.CREATED);
+        return new ResponseEntity<>("Access denied: only admin can create adherents", HttpStatus.FORBIDDEN);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAdherent(@PathVariable Integer id, @RequestBody Adherent adherentDetails) {

@@ -32,6 +32,7 @@ public class AdminService {
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         return adminRepository.save(admin);
     }
+
     public Optional<Admin> updateAdmin(Integer id, Admin admin) {
         Optional<Admin> adminOpt = adminRepository.findById(id);
         if (adminOpt.isPresent()) {

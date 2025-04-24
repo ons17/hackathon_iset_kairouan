@@ -14,34 +14,33 @@ public class ConventionService {
     @Autowired
     private ConventionRepository conventionRepository;
 
-    public Convention createConvention(Convention convention) {
+    public Convention saveConvention(Convention convention) {
         return conventionRepository.save(convention);
-    }
-
-    public Optional<Convention> updateConvention(Long id, Convention updatedConvention) {
-        return conventionRepository.findById(id).map(convention -> {
-            convention.setTitre(updatedConvention.getTitre());
-            convention.setDateDebut(updatedConvention.getDateDebut());
-            convention.setDateFin(updatedConvention.getDateFin());
-            convention.setLieu(updatedConvention.getLieu());
-            convention.setMaxParticipants(updatedConvention.getMaxParticipants());
-            return conventionRepository.save(convention);
-        });
-    }
-
-    public boolean deleteConvention(Long id) {
-        if (conventionRepository.existsById(id)) {
-            conventionRepository.deleteById(id);
-            return true;
-        }
-        return false;
     }
 
     public List<Convention> getAllConventions() {
         return conventionRepository.findAll();
     }
 
-    public Optional<Convention> getConventionById(Long id) {
-        return conventionRepository.findById(id);
+    public Convention getConventionById(Long id) {
+        return conventionRepository.findById(id).orElse(null);
+    }
+
+    public Convention updateConvention(Long id, Convention updated) {
+        Optional<Convention> optional = conventionRepository.findById(id);
+        if (optional.isPresent()) {
+            Convention existing = optional.get();
+            existing.setName(updated.getName());
+            existing.setDescription(updated.getDescription());
+            existing.setDate(updated.getDate());
+            existing.setAdherents(updated.getAdherents());
+            existing.setActivities(updated.getActivities());
+            return conventionRepository.save(existing);
+        }
+        return null;
+    }
+
+    public void deleteConvention(Long id) {
+        conventionRepository.deleteById(id);
     }
 }
