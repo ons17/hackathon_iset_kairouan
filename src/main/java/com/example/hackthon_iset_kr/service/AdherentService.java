@@ -43,7 +43,6 @@ public class AdherentService {
             adherent.setEmail(adherentDetails.getEmail());
             adherent.setPhone(adherentDetails.getPhone());
 
-            // Only update password if it's provided
             if (adherentDetails.getPassword() != null && !adherentDetails.getPassword().isEmpty()) {
                 adherent.setPassword(adherentDetails.getPassword());
             }

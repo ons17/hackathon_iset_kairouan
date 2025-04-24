@@ -29,7 +29,7 @@ public class Config {
                         .requestMatchers("/api/conventions/add").permitAll()
                         .requestMatchers("/api/conventions/id/**").permitAll()
 
-                        .requestMatchers("/api/admin/register", "/api/admin/login","/api/admin/update/**").permitAll()
+                        .requestMatchers("/api/admin/register", "/api/admin/login", "/api/admin/update/**", "/api/admin/create-adherent").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
