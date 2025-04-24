@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 import loginBanner from 'assets/authentication-banners/login.png';
 import IconifyIcon from 'components/base/IconifyIcon';
 import logo from 'assets/logo/elegant-logo.png';
@@ -29,14 +29,40 @@ const Login = (): ReactElement => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:9090/api/admin/login', {
+      // Try logging in as an admin
+      const adminResponse = await axios.post('http://localhost:9090/api/admin/login', {
         email,
         password,
       });
-      alert(response.data); // Display success message
-      navigate('/'); // Redirect to the home page
-    } catch (err: any) {
-      setError(err.response?.data || 'An error occurred');
+
+      if (adminResponse.status === 200) {
+        // Admin login successful
+        localStorage.setItem('userType', 'admin'); // Store user type
+        localStorage.setItem('adminId', adminResponse.data.adminId); // Store admin ID
+        alert('Admin login successful');
+        navigate('/'); // Stay on the same page
+        return;
+      }
+    } catch (adminError) {
+      // If admin login fails, try logging in as an adherent
+      try {
+        const adherentResponse = await axios.post('http://localhost:9090/api/adherents/login', {
+          email,
+          password,
+        });
+
+        if (adherentResponse.status === 200) {
+          // Adherent login successful
+          localStorage.setItem('userType', 'adherent'); // Store user type
+          localStorage.setItem('adherent', JSON.stringify(adherentResponse.data)); // Store adherent details
+          alert('Adherent login successful');
+          navigate('/'); // Stay on the same page
+          return;
+        }
+      } catch (adherentError) {
+        // If both logins fail, show an error message
+        setError('Invalid email or password');
+      }
     }
   };
 
