@@ -11,6 +11,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios'; // Import Axios
 import loginBanner from 'assets/authentication-banners/login.png';
 import IconifyIcon from 'components/base/IconifyIcon';
 import logo from 'assets/logo/elegant-logo.png';
@@ -18,8 +20,25 @@ import Image from 'components/base/Image';
 
 const Login = (): ReactElement => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:9090/api/admin/login', {
+        email,
+        password,
+      });
+      alert(response.data); // Display success message
+      navigate('/'); // Redirect to the home page
+    } catch (err: any) {
+      setError(err.response?.data || 'An error occurred');
+    }
+  };
 
   return (
     <Stack
@@ -43,6 +62,8 @@ const Login = (): ReactElement => {
               variant="filled"
               placeholder="Enter your email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -61,6 +82,8 @@ const Login = (): ReactElement => {
               placeholder="********"
               type={showPassword ? 'text' : 'password'}
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -83,6 +106,11 @@ const Login = (): ReactElement => {
               }}
             />
           </FormControl>
+          {error && (
+            <Typography color="error" variant="body2">
+              {error}
+            </Typography>
+          )}
           <Typography
             variant="body1"
             sx={{
@@ -93,7 +121,7 @@ const Login = (): ReactElement => {
               Forget password
             </Link>
           </Typography>
-          <Button variant="contained" fullWidth>
+          <Button variant="contained" fullWidth onClick={handleLogin}>
             Log in
           </Button>
           <Typography variant="body2" color="text.secondary">

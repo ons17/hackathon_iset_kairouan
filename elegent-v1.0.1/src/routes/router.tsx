@@ -57,8 +57,8 @@ const routes: RouteObject[] = [
         ),
         children: [
           {
-            path: paths.home,
-            element: <Sales />,
+            path: paths.home, // This should resolve to '/home'
+            element: <Sales />, // Ensure this is the correct component for the home page
           },
         ],
       },
@@ -89,6 +89,17 @@ const routes: RouteObject[] = [
             element: <ForgotPassword />,
           },
         ],
+      },
+     
+      {
+        path: '/app',
+        element: (
+          <MainLayout>
+            <Suspense fallback={<PageLoader />}>
+              <Sales /> {/* Ensure this is the correct dashboard component */}
+            </Suspense>
+          </MainLayout>
+        ),
       },
       {
         path: '*',
